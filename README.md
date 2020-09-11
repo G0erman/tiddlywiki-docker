@@ -15,9 +15,13 @@ Now TiddlyWiki should be running on [http://localhost:8080](http://localhost:808
 The container uses a Docker volume to save the wiki data. In order not
 to lose sight of that, I recommend using a local folder for the volume.
 
+    # Docker over linux
     sudo docker run -d -p 8080:8080 -v $(pwd)/.tiddlywiki:/var/lib/tiddlywiki mazzolino/tiddlywiki
+    
+    # Docker over Windows
+    docker run -d -p 8080:8080 -v C:\\Users\\User\\wiki:/var/lib/tiddlywiki mazzolino/tiddlywiki
 
-In this example, the folder `$(pwd)/.tiddlywiki` is used for the data.
+In this example, the folder `$(pwd)/.tiddlywiki` - `C:\\Users\\User\\wiki` is used for the data.
 
 # Auth
 
