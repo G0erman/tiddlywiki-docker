@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+set WIKI_NAME='gedarafi'
+
 tiddlywiki_script=$(readlink -f $(which tiddlywiki))
 
 if [ -n "$NODE_MEM" ]; then
@@ -10,15 +12,15 @@ if [ -n "$NODE_MEM" ]; then
     NODEJS_V8_ARGS="--max_old_space_size=$mem_node_old_space $NODEJS_V8_ARGS"
 fi
 
-if [ ! -d /var/lib/tiddlywiki/mywiki ]; then
-  /usr/bin/env node $NODEJS_V8_ARGS $tiddlywiki_script mywiki --init server
+if [ ! -d /var/lib/tiddlywiki/$WIKI_NAME ]; then
+  /usr/bin/env node $NODEJS_V8_ARGS $tiddlywiki_script $WIKI_NAME --init server
 
-  mkdir /var/lib/tiddlywiki/mywiki/tiddlers
+  mkdir /var/lib/tiddlywiki/${WIKI_NAME}/tiddlers
 fi
 
 
 # Configure the tiddlywiki to be served on a path if it is given
-WEBHOST_TID=/var/lib/tiddlywiki/mywiki/tiddlers/\$__config_tiddlyweb_host.tid
+WEBHOST_TID=/var/lib/tiddlywiki/${WIKI_NAME}/tiddlers/\$__config_tiddlyweb_host.tid
 if [ -n "${SERVE_URI}" ]; then
   cp /tiddlyweb_host_template ${WEBHOST_TID}
   echo '$protocol$//$host$'${SERVE_URI}"/" >> ${WEBHOST_TID}
@@ -31,5 +33,5 @@ fi
 
 # Start the tiddlywiki server
 
-exec /usr/bin/env node $NODEJS_V8_ARGS $tiddlywiki_script mywiki --server 8080 $:/core/save/all text/plain text/html "${USERNAME:-user}" "${PASSWORD-wiki}" 0.0.0.0 ${SERVE_URI}
+exec /usr/bin/env node $NODEJS_V8_ARGS $tiddlywiki_script $WIKI_NAME --server 8080 $:/core/save/all text/plain text/html "${USERNAME:-$WIKI_NAME}" "${PASSWORD-wiki}" 0.0.0.0 ${SERVE_URI}
 
