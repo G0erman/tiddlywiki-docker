@@ -1,6 +1,6 @@
 FROM node:alpine
 
-ENV TIDDLYWIKI_VERSION=5.1.22
+ENV TIDDLYWIKI_VERSION=5.1.21
 
 RUN npm install -g tiddlywiki@${TIDDLYWIKI_VERSION}
 
