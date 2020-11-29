@@ -6,7 +6,7 @@ Install docker.
 
 ## Quickstart
 
-    sudo docker run -d -p 8080:8080 mazzolino/tiddlywiki
+    $ sudo docker run -d -p 8080:8080 mazzolino/tiddlywiki
 
 Now TiddlyWiki should be running on [http://localhost:8080](http://localhost:8080).
 
@@ -14,14 +14,14 @@ Now TiddlyWiki should be running on [http://localhost:8080](http://localhost:808
 
 The container uses a Docker volume to save the wiki data. In order not
 to lose sight of that, I recommend using a local folder for the volume.
-
+   
     # Docker over linux
-    sudo docker run -d -p 8080:8080 -v $(pwd)/.tiddlywiki:/var/lib/tiddlywiki mazzolino/tiddlywiki
+    $ sudo docker run -d -p 8080:8080 -v $(pwd)/.tiddlywiki:/var/lib/tiddlywiki mazzolino/tiddlywiki
     
     # Docker over Windows
-    docker run -d -p 8080:8080 -v C:\\Users\\User\\wiki:/var/lib/tiddlywiki mazzolino/tiddlywiki
+    $ docker run -d -p 8080:8080 -v C:\\Users\\User\\wiki:/var/lib/tiddlywiki mazzolino/tiddlywiki
 
-In this example, the folder `$(pwd)/.tiddlywiki` - `C:\\Users\\User\\wiki` is used for the data.
+In this example, the folder `$(pwd)/.tiddlywiki` - `C:\\Users\\User\\wiki` is used for the data, the wiki is nammed `mywiki`.
 
 # Auth
 
@@ -38,9 +38,16 @@ To serve the tiddlywiki at a [non-root prefix path](https://tiddlywiki.com/stati
 
 # Custom personalization
 
-Build modify docker file `docker build . -t tiddlywiki:21`
+Deploy previous wiki created.
 
-    # Create container from image create
-    docker run -d -p 8080:8080 -v C:\\Users\\User\\wiki_name:/var/lib/tiddlywiki tiddlywiki:21
+    # Ensure previous wiki exist, and you can see in current directory
+    $ ls
+    wiki_name
     
-
+    # Build personalizate wiki indicating tiddlywiki version, and her name (the same name of the directory)
+    $ sudo docker build --build-arg=TIDDLYWIKI_VERSION=5.1.21 --build-arg=WIKI_NAME=wiki_name -t my_tiddlywiki:21 .
+    
+    # Create container from image create
+    $ sudo docker run -d -p 8080:8080 -v $(pwd):/var/lib/tiddlywiki my_tiddlywiki:21 
+    
+you can access to the wiki at 127.0.0.1:8080, the user name is `wiki_name` and the password is `user`
