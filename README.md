@@ -50,4 +50,4 @@ Deploy previous wiki created.
     # Create container from image create
     $ sudo docker run -d -p 8080:8080 -v $(pwd):/var/lib/tiddlywiki my_tiddlywiki:21 
     
-you can access to the wiki at 127.0.0.1:8080, the user name is `wiki_name` and the password is `user`
+you can access to the wiki at 127.0.0.1:8080, the user name is `wiki_name` and the password is `wiki`
