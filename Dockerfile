@@ -1,6 +1,10 @@
 FROM node:alpine
 
-ENV TIDDLYWIKI_VERSION=5.1.21
+ARG TIDDLYWIKI_VERSION
+ENV TIDDLYWIKI_VERSION=${TIDDLYWIKI_VERSION}
+
+ARG WIKI_NAME
+ENV WIKI_NAME=${WIKI_NAME}
 
 RUN npm install -g tiddlywiki@${TIDDLYWIKI_VERSION}
 
@@ -13,5 +17,5 @@ ADD tiddlyweb_host /tiddlyweb_host_template
 ADD init-and-run-wiki /usr/local/bin/init-and-run-wiki
 
 # Meta
-CMD ["/usr/local/bin/init-and-run-wiki"]
+CMD ["/usr/local/bin/init-and-run-wiki", "$WIKI_NAME"]
 EXPOSE 8080

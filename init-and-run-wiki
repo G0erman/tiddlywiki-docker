@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-set WIKI_NAME='gedarafi'
+set WIKI_NAME=$1
 
 tiddlywiki_script=$(readlink -f $(which tiddlywiki))
 
